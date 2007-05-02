@@ -1,5 +1,6 @@
 package Acme::Lambda;
 
+use 5.008;
 use warnings;
 use strict;
 use utf8;
@@ -11,7 +12,7 @@ our @EXPORT_OK = @EXPORT;
 
 sub lambda(&) {
     my $sub = shift;
-    return $sub;
+    return sub {local $_ = $_[0]; $sub->(@_)};
 }
 
 *λ = \&lambda;
@@ -38,9 +39,14 @@ Acme::Lambda brings the power of lambda to perl! It exports lambda and
     my $square = lambda { $_ * $_ };
     print $square->(4);         # 16
 
-    use utf8
+    use utf8;
     my $cube = λ {$_ * $_ * $_};
     print $cube->(3);           # 27
+
+    # The sub can also access its full argument list through @_
+    my $add = lambda {$_[0] + $_[1] } ;
+
+    print $add->(3,4);          # 7
 
 =head1 EXPORT
 
