@@ -17,6 +17,8 @@ sub lambda(&) {
 
 *λ = \&lambda;
 
+=encoding utf8
+
 =head1 NAME
 
 Acme::Lambda - Perl with lambdas!
